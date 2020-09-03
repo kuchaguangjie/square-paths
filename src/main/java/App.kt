@@ -11,7 +11,7 @@ object App {
     fun main(args: Array<String>) {
         val startTime = System.currentTimeMillis()
 
-        extendLoop(1_001, graphSearch(32)!!)
+        extendLoop(1_400, graphSearch(32)!!)
 
         println("time in seconds: ${(System.currentTimeMillis() - startTime) / 1000}")
     }
