@@ -2,6 +2,7 @@ package util
 
 val squareCache = SquareCache(5_000_000)
 
+// cache of boolean array to indicate whether a number is a square,
 class SquareCache(upperLimit: Int) {
 
     private val cache: BooleanArray = BooleanArray(upperLimit)

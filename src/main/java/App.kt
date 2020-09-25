@@ -37,18 +37,17 @@ object App {
         }
     }
 
+    // search graph, via brute force,
     private fun graphSearch(number: Int): Cycle? {
         val graph = SquareGraph(number)
         var done = false
         var searchDurationMs = 1
-        while (!done) {
+        while (!done) { // search in incremental timeout,
             searchDurationMs *= 2
-            val solution = Pathfinder(graph).search(searchDurationMs.toLong())
-            val verified = !solution.isEmpty() && Verifier(solution, squareCache).isHamiltonianCycle(number)
-            done = verified || searchDurationMs >= 1000
-            if (done) {
-                return Cycle(number, solution.toIntArray())
-            }
+            val solution = Pathfinder(graph).search(searchDurationMs.toLong())  // search path, with timeout,
+            val verified = !solution.isEmpty() && Verifier(solution, squareCache).isHamiltonianCycle(number) // verify path,
+            done = verified || searchDurationMs >= 1000 // give up after given max timeout,
+            if (done) return Cycle(number, solution.toIntArray()) // tips: this may be empty, on timeout,
         }
         return null
     }

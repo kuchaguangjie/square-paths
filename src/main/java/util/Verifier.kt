@@ -1,7 +1,8 @@
 package util
 
+// verify a path,
 class Verifier(private val nodes: List<Int>, private val squareCache: SquareCache) {
-
+    // verify as path,
     fun isHamiltonianPath(length: Int): Boolean {
         if (nodes.size != length) return false
         val allNodes = containsEachNodeOnce()
@@ -9,6 +10,7 @@ class Verifier(private val nodes: List<Int>, private val squareCache: SquareCach
         return allNodes && allSquares
     }
 
+    // check each number occur once,
     private fun containsEachNodeOnce(): Boolean {
         val seen = IntArray(nodes.size)
         for (node in nodes) {
@@ -19,6 +21,7 @@ class Verifier(private val nodes: List<Int>, private val squareCache: SquareCach
         return true
     }
 
+    // verify as cycle,
     fun isHamiltonianCycle(length: Int): Boolean =
             isHamiltonianPath(length) && squareCache.contains(nodes[0] + nodes[nodes.size - 1])
 

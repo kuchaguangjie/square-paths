@@ -2,11 +2,12 @@ package search
 
 import util.Edges
 
+// a path of nodes,
 class Path(private val number: Int) {
 
     private val nodes: IntArray = IntArray(number)
     private val included: BooleanArray = BooleanArray(number)
-    private var currentTop = -1
+    private var currentTop = -1 // previous index, -1 means none,
 
     val isHamiltonian: Boolean
         get() = currentTop == number - 1
@@ -27,7 +28,7 @@ class Path(private val number: Int) {
 
     fun last(): Int = nodes[currentTop]
 
-    fun canBeClosed(): Boolean = Edges.isSquare(nodes[0], nodes[currentTop])
+    fun canBeClosed(): Boolean = Edges.isSquare(nodes[0], nodes[currentTop]) // check cycle,
 
     fun length(): Int = currentTop + 1
 
