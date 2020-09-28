@@ -9,17 +9,18 @@ fun cycleOf(edgeList: IntArray) = Cycle(edgeList.size, edgeList)
 class Cycle private constructor(
         val maxNumber: Int,
         private val squares: SquareCache,
-        private val edgeList: IntArray
+        private val edgeList: IntArray // key -> start of edge, value -> end of edge; index 0 not used,
 ) {
 
     constructor(maxNumber: Int, nodes: IntArray, squares: SquareCache = squareCache) :
-            this(maxNumber, squares, IntArray(maxNumber + 1) { _ -> -1 }) {
+            this(maxNumber, squares, IntArray(maxNumber + 1) { _ -> -1 }) { // init as -1,
         nodes.forEachIndexed { index, node ->
             edgeList[node] = nodes[(index + 1) % nodes.size]
         }
+        println("edgeList: ${edgeList.contentToString()}")
     }
 
-    fun withNewNode(): Cycle = Cycle(maxNumber + 1, squares, edgeList + intArrayOf(-1))
+    fun withNewNode(): Cycle = Cycle(maxNumber + 1, squares, edgeList + intArrayOf(-1)) // append a new edge with end value as -1,
 
     private fun cut(from: Int, to: Int): Pair<Int, Int>? {
         val start = next(from)

@@ -11,11 +11,12 @@ object App {
     fun main(args: Array<String>) {
         val startTime = System.currentTimeMillis()
 
-        extendLoop(1_400, graphSearch(32)!!)
+        extendLoop(1_400, graphSearch(32)!!) // start with known first cycle 32, then extend on it,
 
         println("time in seconds: ${(System.currentTimeMillis() - startTime) / 1000}")
     }
 
+    // extend base on a start cycle, until given max vertex,
     private fun extendLoop(max_vertex_number: Int, starter: Cycle) {
         println(
                 if (starter.isHamiltonian())
@@ -37,7 +38,7 @@ object App {
         }
     }
 
-    // search graph, via brute force,
+    // search graph, via brute force, with incremental timeout,
     private fun graphSearch(number: Int): Cycle? {
         val graph = SquareGraph(number)
         var done = false
@@ -45,7 +46,7 @@ object App {
         while (!done) { // search in incremental timeout,
             searchDurationMs *= 2
             val solution = Pathfinder(graph).search(searchDurationMs.toLong())  // search path, with timeout,
-            val verified = !solution.isEmpty() && Verifier(solution, squareCache).isHamiltonianCycle(number) // verify path,
+            val verified = solution.isNotEmpty() && Verifier(solution, squareCache).isHamiltonianCycle(number) // verify path,
             done = verified || searchDurationMs >= 1000 // give up after given max timeout,
             if (done) return Cycle(number, solution.toIntArray()) // tips: this may be empty, on timeout,
         }
