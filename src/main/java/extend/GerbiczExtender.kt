@@ -36,7 +36,7 @@ object GerbiczExtender {
     }
 
     fun extend(extendee: Cycle): Cycle? {
-        val cycle = extendee.withNewNode()
+        val cycle = extendee.withNewNode() // add a new node n,
         val edge = cycleExtenders(extendee).firstOrNull() ?: return null
         val cut = cycle.replace(edge, Pair(extendee.maxNumber + 1, extendee.maxNumber + 1), false)
         if (cut != null) cycle.replace(edge.second to cycle.next(edge.second), cut, true)
