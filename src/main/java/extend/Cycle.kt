@@ -88,8 +88,7 @@ class Cycle private constructor(
             if (current == -1) throw IllegalStateException("not in cycle!")
         } while (current != startNode)
         return edgeCount == maxNumber
-
     }
 
-    fun next(node: Int) = edgeList[node]
+    fun next(node: Int) = edgeList[node] // get end of edge, aka. the next value in sequence for param,
 }
